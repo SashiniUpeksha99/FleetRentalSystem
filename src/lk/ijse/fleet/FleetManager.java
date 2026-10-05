@@ -45,7 +45,39 @@ public class FleetManager {
 
     public RentalAgreement createRentalAgreement(String vehicleId, String customerId, int rentalDays) throws VehicleNotAvailableException,InsufficientCreditException{
 
-        return null;
+        Vehicle vehicleById = findVehicleById(vehicleId);
+        if(vehicleById == null){
+            System.out.println("No vehicle found with this ID");
+            return null;
+        }
+
+        if(!vehicleById.getStatus().equals(RentalStatus.AVAILABLE)){
+            throw new VehicleNotAvailableException("...");
+        }
+
+        Customer customerById = findCustomerById(customerId);
+        if(customerById == null){
+            System.out.println("No Customer found with this ID");
+            return null;
+        }
+        double subtotal = vehicleById.calculateRentalCost(rentalDays);
+        double totalCost = customerById.applyDiscount(subtotal);
+
+        if(customerById instanceof CorporateCustomer &&
+                !((CorporateCustomer) customerById).hasSufficientCredit(totalCost)){
+            throw new InsufficientCreditException("...");
+
+        }
+
+        RentalAgreement agreement = new RentalAgreement(vehicleById, customerById, rentalDays);
+        vehicleById.setStatus(RentalStatus.RENTED);
+
+        agreements.add(agreement);
+
+        if(rentalEventListener != null){
+            rentalEventListener.onRentalCreated(agreement);
+        }
+        return agreement;
     }
 
     public void returnVehicle(String agreementId){

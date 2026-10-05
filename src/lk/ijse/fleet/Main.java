@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     private FleetManager fleetManager;
-    private  UserManager userManager;
+    private static UserManager userManager;
     private static Scanner scanner;
     private static SystemUser loggedInUser;
 
@@ -47,7 +47,7 @@ public class Main {
             String userName;
             String password;
             String fullName;
-            UserManager userManager = new UserManager();
+            userManager = new UserManager();
             SystemUser obj;
 
             switch (choice){

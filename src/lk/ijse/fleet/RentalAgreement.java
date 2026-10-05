@@ -14,6 +14,15 @@ public class RentalAgreement {
         this.vehicle = vehicle;
         this.customer = customer;
         this.rentalDays = rentalDays;
+
+        double subtotal = vehicle.calculateRentalCost(rentalDays);
+        totalCost = customer.applyDiscount(subtotal);
+
+        agreementId = String.format("AGR-%03d", counter);
+        counter++;
+
+        daysElapsed = 0;
+
     }
 
     public static int getCounter() {
