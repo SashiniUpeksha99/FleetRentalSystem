@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    private FleetManager fleetManager;
+    private static FleetManager fleetManager;
     private static UserManager userManager;
     private static Scanner scanner;
     private static SystemUser loggedInUser;
@@ -13,6 +13,12 @@ public class Main {
         run();
     }
     public static void run(){
+
+        fleetManager = new FleetManager();
+        fleetManager.setRentalEventListener(agreement ->
+                System.out.println("[EVENT] New rental created : "+agreement.getAgreementId())
+
+        );
         showAuthMenu();
     }
 
