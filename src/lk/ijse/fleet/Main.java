@@ -125,5 +125,67 @@ public class Main {
                          "FRMS MAIN MENU | Logged in as : "+loggedInUser.getFullName()+"\n"+
                          "===========================================================\n");
 
+        System.out.println("[1] Add Vehicle\n" +
+                            "[2] Add Customer\n" +
+                            "[3] View Available Vehicles\n" +
+                "[4] Create Rental Agreement\n" +
+                "[5] Return Vehicle\n" +
+                "[6] View Revenue Report\n" +
+                "[7] View Vehicles by Fuel Type\n" +
+                "[8] View Combined Fleet & Customer Report\n" +
+                "[9] View All Customers\n" +
+                "[10] View All Rental Agreements\n" +
+                "[0] Logout\n" +
+                //"Enter choice > _\n" +
+                "===========================================================\n");
+
+        int choice = 0 ;
+        while(true){
+            try{
+                System.out.print("Enter choice > ");
+                choice = scanner.nextInt();
+
+                if(choice < 0 || choice >10){
+                    System.out.println("Please enter a valid choice.");
+                    continue;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Please enter a valid choice.");
+                scanner.nextLine();
+                continue;
+            }
+            scanner.nextLine();
+            break;
+        }
+
+        switch (choice){
+            case 1 :
+                break;
+            case 2 :
+                break;
+            case 3 :
+                break;
+            case 4 :
+                break;
+            case 5 :
+                break;
+            case 6 :
+                System.out.println("Coming soon..");
+                break;
+            case 7 :
+                System.out.println("Coming soon...");
+                break;
+            case 8 :
+                System.out.println("Coming soon....");
+                break;
+            case 9 :
+                break;
+            case 10 :
+                break;
+            case 0 :
+                loggedInUser = null;
+                return;
+
+        }
     }
 }

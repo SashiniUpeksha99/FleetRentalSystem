@@ -1,5 +1,6 @@
 package lk.ijse.fleet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FleetManager {
@@ -39,8 +40,13 @@ public class FleetManager {
     }
 
     public List<Vehicle> getAvailableVehicles(){
-
-        return null;
+        List<Vehicle> availableVehicles = new ArrayList<Vehicle>();
+        for (Vehicle vehicle : vehicles){
+            if (vehicle.getStatus().equals(RentalStatus.AVAILABLE)){
+                availableVehicles.add(vehicle);
+            }
+        }
+        return availableVehicles;
     }
 
     public RentalAgreement createRentalAgreement(String vehicleId, String customerId, int rentalDays) throws VehicleNotAvailableException,InsufficientCreditException{
@@ -81,7 +87,14 @@ public class FleetManager {
     }
 
     public void returnVehicle(String agreementId){
-
+        for (RentalAgreement agreement :  agreements ){
+            if (agreement.getAgreementId().equalsIgnoreCase(agreementId)) {
+                agreement.getVehicle().setStatus(RentalStatus.AVAILABLE);
+                System.out.println("Rental agreement "+agreementId+"completed. Vehicle is now Available.");
+                break;
+            }
+        }
+        System.out.println("No rental agreement found with id : "+agreementId);
     }
 
     public FleetSnapshot generateSnapshot(){
