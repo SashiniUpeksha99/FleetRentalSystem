@@ -18,19 +18,27 @@ public class FleetManager {
     }
 
     public Vehicle findVehicleById(String id){
-        for(Vehicle v :vehicles){
-            if(v.getVehicleId().equalsIgnoreCase(id)){
-                return v;
+        try{
+            for(Vehicle v :vehicles){
+                if(v.getVehicleId().equalsIgnoreCase(id)){
+                    return v;
+                }
             }
+        }catch(NullPointerException e){
+            //System.out.println("No vehicles have been added yet");
         }
         return null;
     }
 
     public Customer findCustomerById(String id){
-        for(Customer c :customers){
-            if(c.getCustomerId().equalsIgnoreCase(id)){
-                return c;
+        try{
+            for(Customer c :customers){
+                if(c.getCustomerId().equalsIgnoreCase(id)){
+                    return c;
+                }
             }
+        }catch (NullPointerException e){
+            //System.out.println("No customers have been added yet");
         }
         return null;
     }
@@ -52,6 +60,7 @@ public class FleetManager {
     public RentalAgreement createRentalAgreement(String vehicleId, String customerId, int rentalDays) throws VehicleNotAvailableException,InsufficientCreditException{
 
         Vehicle vehicleById = findVehicleById(vehicleId);
+
         if(vehicleById == null){
             System.out.println("No vehicle found with this ID");
             return null;

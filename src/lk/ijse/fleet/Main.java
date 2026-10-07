@@ -31,25 +31,23 @@ public class Main {
                     "===========================================================\n" +
                     "[1] Login\n[2] Register New User\n[0] Exit\n");
             System.out.print("===========================================================\n");
+
             int choice = 0 ;
             while(true){
                 try{
                     System.out.print("Enter choice > ");
-                    choice = scanner.nextInt();
+                    choice = Integer.parseInt(scanner.nextLine().trim());
 
                     if(choice < 0 || choice >2){
                         System.out.println("Please enter a valid choice.");
                         continue;
                     }
-                }catch (InputMismatchException e){
+                }catch (NumberFormatException e){
                     System.out.println("Please enter a valid choice.");
-                    scanner.nextLine();
                     continue;
                 }
-                scanner.nextLine();
                 break;
             }
-
             String userName;
             String password;
             String fullName;
@@ -120,72 +118,87 @@ public class Main {
     }
 
     public static void showMainMenu(){
-        System.out.print("\nWelcome," +loggedInUser.getFullName()+"! Loading fleet dashboard...\n"+
-                         "===========================================================\n" +
-                         "FRMS MAIN MENU | Logged in as : "+loggedInUser.getFullName()+"\n"+
-                         "===========================================================\n");
 
-        System.out.println("[1] Add Vehicle\n" +
-                            "[2] Add Customer\n" +
-                            "[3] View Available Vehicles\n" +
-                "[4] Create Rental Agreement\n" +
-                "[5] Return Vehicle\n" +
-                "[6] View Revenue Report\n" +
-                "[7] View Vehicles by Fuel Type\n" +
-                "[8] View Combined Fleet & Customer Report\n" +
-                "[9] View All Customers\n" +
-                "[10] View All Rental Agreements\n" +
-                "[0] Logout\n" +
-                //"Enter choice > _\n" +
-                "===========================================================\n");
-
-        int choice = 0 ;
         while(true){
-            try{
-                System.out.print("Enter choice > ");
-                choice = scanner.nextInt();
 
-                if(choice < 0 || choice >10){
+            System.out.print("\nWelcome," +loggedInUser.getFullName()+"! Loading fleet dashboard...\n"+
+                    "===========================================================\n" +
+                    "FRMS MAIN MENU | Logged in as : "+loggedInUser.getFullName()+"\n"+
+                    "===========================================================\n");
+
+            System.out.println("[1] Add Vehicle\n" +
+                    "[2] Add Customer\n" +
+                    "[3] View Available Vehicles\n" +
+                    "[4] Create Rental Agreement\n" +
+                    "[5] Return Vehicle\n" +
+                    "[6] View Revenue Report\n" +
+                    "[7] View Vehicles by Fuel Type\n" +
+                    "[8] View Combined Fleet & Customer Report\n" +
+                    "[9] View All Customers\n" +
+                    "[10] View All Rental Agreements\n" +
+                    "[0] Logout\n" +
+                    //"Enter choice > _\n" +
+                    "===========================================================\n");
+
+            int choice = 0 ;
+            while(true){
+                try{
+                    System.out.print("Enter choice > ");
+                    choice = Integer.parseInt(scanner.nextLine().trim());
+
+                    if(choice < 0 || choice >10){
+                        System.out.println("Please enter a valid choice.");
+                        continue;
+                    }
+                }catch (NumberFormatException e){
                     System.out.println("Please enter a valid choice.");
                     continue;
                 }
-            }catch (InputMismatchException e){
-                System.out.println("Please enter a valid choice.");
-                scanner.nextLine();
-                continue;
+                break;
             }
-            scanner.nextLine();
-            break;
-        }
 
-        switch (choice){
-            case 1 :
-                break;
-            case 2 :
-                break;
-            case 3 :
-                break;
-            case 4 :
-                break;
-            case 5 :
-                break;
-            case 6 :
-                System.out.println("Coming soon..");
-                break;
-            case 7 :
-                System.out.println("Coming soon...");
-                break;
-            case 8 :
-                System.out.println("Coming soon....");
-                break;
-            case 9 :
-                break;
-            case 10 :
-                break;
-            case 0 :
-                loggedInUser = null;
-                return;
+            switch (choice){
+                case 1 :
+                    break;
+                case 2 :
+                    break;
+                case 3 :
+                    break;
+                case 4 :
+                    String vehicleId = null;
+                    String customerId = null;
+                    int rentalDays = 0;
 
+                    try{
+                        RentalAgreement agreement = fleetManager.createRentalAgreement(vehicleId, customerId, rentalDays);
+
+                        if (agreement != null){
+                            System.out.println(agreement);
+                        }
+
+                    } catch (VehicleNotAvailableException | InsufficientCreditException e) {
+                        System.out.println("Rental failed: "+ e.getMessage());
+                    }
+                    break;
+                case 5 :
+                    break;
+                case 6 :
+                    System.out.println("Coming soon..");
+                    break;
+                case 7 :
+                    System.out.println("Coming soon...");
+                    break;
+                case 8 :
+                    System.out.println("Coming soon....");
+                    break;
+                case 9 :
+                    break;
+                case 10 :
+                    break;
+                case 0 :
+                    loggedInUser = null;
+                    return;
+            }
         }
     }
 }

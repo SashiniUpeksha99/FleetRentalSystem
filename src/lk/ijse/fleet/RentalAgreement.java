@@ -59,13 +59,16 @@ public class RentalAgreement {
 
     @Override
     public String toString() {
-        return "RentalAgreement{" +
-                "agreementId='" + agreementId + '\'' +
-                ", vehicle=" + vehicle +
-                ", customer=" + customer +
-                ", rentalDays=" + rentalDays +
-                ", totalCost=" + totalCost +
-                ", daysElapsed=" + daysElapsed +
-                '}';
+        return "===========================================================\n" +
+                "RENTAL AGREEMENT RECEIPT" +
+                "===========================================================\n" +
+                "Agreement ID : "+getAgreementId()+"\n"+
+                "Vehicle : "+vehicle.getVehicleId()+" - "+vehicle.getBrand()+" "+vehicle.getModel()+" ("+vehicle.getClass().getSimpleName()+")\n"+
+
+
+
+
+
+                ")";
     }
 }
