@@ -1,6 +1,5 @@
 package lk.ijse.fleet;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         run();
     }
+
     public static void run(){
 
         fleetManager = new FleetManager();
@@ -19,6 +19,15 @@ public class Main {
                 System.out.println("[EVENT] New rental created : "+agreement.getAgreementId())
 
         );
+
+        Thread statusThread = new Thread(new VehicleStatusMonitor(fleetManager));
+        statusThread.setDaemon(true);
+        statusThread.start();
+
+        Thread overdueThread = new Thread(new OverdueReminderWorker(fleetManager));
+        overdueThread.setDaemon(true);
+        overdueThread.start();
+
         showAuthMenu();
     }
 
@@ -164,6 +173,7 @@ public class Main {
                     break;
                 case 3 :
                     break;
+
                 case 4 :
                     String vehicleId = "V001";
                     String customerId = "V002";
@@ -181,6 +191,7 @@ public class Main {
                     }
                     break;
                 case 5 :
+
                     break;
                 case 6 :
                     System.out.println("Coming soon..");

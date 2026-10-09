@@ -116,7 +116,15 @@ public class FleetManager {
     }
 
     public synchronized void  checkOverdueAgreements(){
+        for (RentalAgreement agreement : agreements){
 
+            agreement.setDaysElapsed(agreement.getDaysElapsed()+1);
+
+            if(agreement.getDaysElapsed() > agreement.getRentalDays()){
+                System.out.println("[OVERDUE ALERT] Agreement "+agreement.getAgreementId()+
+                        " has exceeded it's "+agreement.getRentalDays()+"-day rental period.");
+            }
+        }
     }
 
     public List<Vehicle> getVehiclesByFuelType(FuelType type){
@@ -151,11 +159,21 @@ public class FleetManager {
         private double totalRevenue;
 
         public FleetSnapshot() {
+            for (Vehicle vehicle : vehicles){
+                if(vehicle.getStatus() == RentalStatus.AVAILABLE) {
+                    availableCount++;
+                }else{
+                    rentedCount++;
+                }
+            }
 
+            for (RentalAgreement agreement : agreements){
+                totalRevenue += agreement.getTotalCost();
+            }
         }
 
         public void printSummary(){
-
+            System.out.println("[FLEET STATUS] Available: "+availableCount+" Rented: "+rentedCount+" Total Revenue So Far: "+totalRevenue);
         }
     }
 

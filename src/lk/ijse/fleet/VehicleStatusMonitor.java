@@ -2,7 +2,7 @@ package lk.ijse.fleet;
 
 public class VehicleStatusMonitor implements Runnable{
 
-    private FleetManager fleetManager;
+    private final FleetManager fleetManager;
 
     public VehicleStatusMonitor(FleetManager fleetManager) {
         this.fleetManager = fleetManager;
@@ -15,8 +15,9 @@ public class VehicleStatusMonitor implements Runnable{
                 Thread.sleep(5000);
                 fleetManager.printFleetStatus();
 
-            } catch (Exception e) {
-                break;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+//                break;
             }
         }
     }

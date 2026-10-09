@@ -1,7 +1,11 @@
 package lk.ijse.fleet;
 
 public class OverdueReminderWorker implements Runnable{
-    private FleetManager fleetManager;
+    private final FleetManager fleetManager;
+
+    public OverdueReminderWorker(FleetManager fleetManager) {
+        this.fleetManager = fleetManager;
+    }
 
 
     @Override
@@ -11,8 +15,9 @@ public class OverdueReminderWorker implements Runnable{
                 Thread.sleep(5000);
                 fleetManager.checkOverdueAgreements();
 
-            } catch (Exception e) {
-                break;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+//               break;
             }
         }
     }
