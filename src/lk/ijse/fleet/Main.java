@@ -165,9 +165,9 @@ public class Main {
                 case 3 :
                     break;
                 case 4 :
-                    String vehicleId = null;
-                    String customerId = null;
-                    int rentalDays = 0;
+                    String vehicleId = "V001";
+                    String customerId = "V002";
+                    int rentalDays = 10;
 
                     try{
                         RentalAgreement agreement = fleetManager.createRentalAgreement(vehicleId, customerId, rentalDays);

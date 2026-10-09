@@ -64,11 +64,10 @@ public class RentalAgreement {
                 "===========================================================\n" +
                 "Agreement ID : "+getAgreementId()+"\n"+
                 "Vehicle : "+vehicle.getVehicleId()+" - "+vehicle.getBrand()+" "+vehicle.getModel()+" ("+vehicle.getClass().getSimpleName()+")\n"+
-
-
-
-
-
+                "Customer : "+customer.getCustomerId()+" - "+customer.getFullName()+" ("+customer.getClass().getSimpleName()+")\n"+
+                "Rental Days : "+getRentalDays()+
+                "Total Cost : "+getTotalCost()+
+                "===========================================================\n" +
                 ")";
     }
 }

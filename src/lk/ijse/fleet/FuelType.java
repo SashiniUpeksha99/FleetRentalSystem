@@ -11,6 +11,7 @@ public enum FuelType {
     FuelType(double costMultiplier) {
         this.costMultiplier = costMultiplier;
     }
+
     public double getCostMultiplier(){
         return costMultiplier;
     }

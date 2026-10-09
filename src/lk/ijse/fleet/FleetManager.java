@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FleetManager {
-    private List<Vehicle> vehicles;
-    private List<Customer> customers;
-    private List<RentalAgreement> agreements;
+    private List<Vehicle> vehicles = new ArrayList<Vehicle>();
+    private List<Customer> customers = new ArrayList<Customer>();
+    private List<RentalAgreement> agreements = new ArrayList<RentalAgreement>();
     private RentalEventListener rentalEventListener;
+
 
     public void addVehicle(Vehicle c){
         vehicles.add(c);
