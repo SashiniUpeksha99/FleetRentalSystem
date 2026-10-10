@@ -194,6 +194,7 @@ public class Main {
 
                     break;
                 case 6 :
+
                     System.out.println("Coming soon..");
                     break;
                 case 7 :

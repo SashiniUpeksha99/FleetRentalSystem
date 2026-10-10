@@ -1,7 +1,9 @@
 package lk.ijse.fleet;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FleetManager {
     private List<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -49,13 +51,23 @@ public class FleetManager {
     }
 
     public List<Vehicle> getAvailableVehicles(){
-        List<Vehicle> availableVehicles = new ArrayList<Vehicle>();
-        for (Vehicle vehicle : vehicles){
-            if (vehicle.getStatus().equals(RentalStatus.AVAILABLE)){
-                availableVehicles.add(vehicle);
-            }
-        }
+
+        List<Vehicle> availableVehicles;
+
+        availableVehicles = vehicles.stream()
+                .filter(v -> v.getStatus() == RentalStatus.AVAILABLE)
+                .collect(Collectors.toList());
+
         return availableVehicles;
+
+
+//        List<Vehicle> availableVehicles = new ArrayList<Vehicle>();
+//        for (Vehicle vehicle : vehicles){
+//            if (vehicle.getStatus().equals(RentalStatus.AVAILABLE)){
+//                availableVehicles.add(vehicle);
+//            }
+//        }
+//        return availableVehicles;
     }
 
     public RentalAgreement createRentalAgreement(String vehicleId, String customerId, int rentalDays) throws VehicleNotAvailableException,InsufficientCreditException{
@@ -129,15 +141,23 @@ public class FleetManager {
 
     public List<Vehicle> getVehiclesByFuelType(FuelType type){
 
-        return null;
+        return vehicles.stream()
+                .filter(v -> v.getFuelType() == type)
+                .collect(Collectors.toList());
     }
 
     public List<Customer> getCustomersSortedByName(){
-        return null;
+
+        return customers.stream()
+                .sorted(Comparator.comparing(c -> c.getFullName()))
+                .collect(Collectors.toList());
+
     }
 
     public double generateRevenueReport(){
-        return 0;
+        return agreements.stream()
+                .mapToDouble(a -> a.getTotalCost())
+                .sum();
     }
 
     public void printAllReportables(){
