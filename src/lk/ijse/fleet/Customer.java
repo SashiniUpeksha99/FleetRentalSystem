@@ -37,7 +37,7 @@ public abstract class Customer implements Reportable {
     public abstract double applyDiscount(double subtotal);
 
     public String getSummary(){
-        return customerId+fullName;
+        return customerId+" - "+fullName;
     }
 
     public String getReportCategory(){

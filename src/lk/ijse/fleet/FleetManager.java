@@ -59,15 +59,6 @@ public class FleetManager {
                 .collect(Collectors.toList());
 
         return availableVehicles;
-
-
-//        List<Vehicle> availableVehicles = new ArrayList<Vehicle>();
-//        for (Vehicle vehicle : vehicles){
-//            if (vehicle.getStatus().equals(RentalStatus.AVAILABLE)){
-//                availableVehicles.add(vehicle);
-//            }
-//        }
-//        return availableVehicles;
     }
 
     public RentalAgreement createRentalAgreement(String vehicleId, String customerId, int rentalDays) throws VehicleNotAvailableException,InsufficientCreditException{
@@ -112,6 +103,7 @@ public class FleetManager {
         for (RentalAgreement agreement :  agreements ){
             if (agreement.getAgreementId().equalsIgnoreCase(agreementId)) {
                 agreement.getVehicle().setStatus(RentalStatus.AVAILABLE);
+
                 System.out.println("Rental agreement "+agreementId+"completed. Vehicle is now Available.");
                 break;
             }
@@ -162,14 +154,21 @@ public class FleetManager {
 
     public void printAllReportables(){
 
+        List<Reportable> reportables = new ArrayList<>();
+        reportables.addAll(vehicles);
+        reportables.addAll(customers);
+
+        for (Reportable item : reportables){
+            System.out.println(item.getReportCategory() +" : "+item.getSummary());
+        }
     }
 
     public List<Customer> getAllCustomers(){
-        return null;
+        return customers;
     }
 
     public List<RentalAgreement> getAllAgreements(){
-        return null;
+        return agreements;
     }
 
 
@@ -179,12 +178,16 @@ public class FleetManager {
         private double totalRevenue;
 
         public FleetSnapshot() {
-            for (Vehicle vehicle : vehicles){
-                if(vehicle.getStatus() == RentalStatus.AVAILABLE) {
-                    availableCount++;
-                }else{
-                    rentedCount++;
+            try {
+                for (Vehicle vehicle : vehicles) {
+                    if (vehicle.getStatus() == RentalStatus.AVAILABLE) {
+                        availableCount++;
+                    } else {
+                        rentedCount++;
+                    }
                 }
+            }catch (NullPointerException e){
+
             }
 
             for (RentalAgreement agreement : agreements){
@@ -193,7 +196,7 @@ public class FleetManager {
         }
 
         public void printSummary(){
-            System.out.println("[FLEET STATUS] Available: "+availableCount+" Rented: "+rentedCount+" Total Revenue So Far: "+totalRevenue);
+            System.out.println("\n[FLEET STATUS] Available:"+availableCount+" Rented:"+rentedCount+" Total Revenue So Far:"+totalRevenue);
         }
     }
 

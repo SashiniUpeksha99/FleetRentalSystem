@@ -78,7 +78,7 @@ public abstract class Vehicle implements Reportable {
     public abstract double calculateRentalCost(int rentalDays);
 
     public String getSummary(){
-        return vehicleId+brand+model+status;
+        return vehicleId+" - "+brand+" - "+model+" - "+status;
     }
     public String getReportCategory(){
         return "VEHICLE";
