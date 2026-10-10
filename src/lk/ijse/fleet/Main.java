@@ -1,5 +1,7 @@
 package lk.ijse.fleet;
 
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -194,12 +196,58 @@ public class Main {
 
                     break;
                 case 6 :
-
-                    System.out.println("Coming soon..");
+                    System.out.print("===========================================================\n" +
+                                     "                    FLEET REVENUE REPORT                   \n" +
+                                     "===========================================================\n"+
+                            "Total Revenue : "+fleetManager.generateRevenueReport()+
+                            "\n------------------------------------------------------");
                     break;
                 case 7 :
-                    System.out.println("Coming soon...");
+                    scanner = new Scanner(System.in);
+
+                    System.out.print("===========================================================\n" +
+                                     "               SEARCH VEHICLES BY FUEL TYPE                \n" +
+                            "===========================================================\n");
+
+                    FuelType fuelType;
+
+                    while(true){
+                        System.out.print("Enter Fuel Type : ");
+                        String inputFuelTYpe = scanner.nextLine().trim().toUpperCase();
+
+                        try{
+                            fuelType = FuelType.valueOf(inputFuelTYpe);
+                            break;
+                        }catch(IllegalArgumentException e){
+                            System.out.println("Invalid Fuel Type. Try Again!");
+                        }
+                    }
+
+                    List<Vehicle> selectVehiclesByFuelType = fleetManager.getVehiclesByFuelType(fuelType);
+
+                    System.out.println("+-------------+---------------------+---------------+---------------+---------------+---------------+");
+                    System.out.printf("| %-11s | %-19s | %-13s | %-13s | %-13s | %-13s |%n",
+                            "Vehicle ID",
+                            "Registration Number",
+                            "Brand",
+                            "Model",
+                            "Daily Rate",
+                            "Rental Status");
+                    System.out.println("+-------------+---------------------+---------------+---------------+---------------+---------------+");
+
+                    for (Vehicle vehicle : selectVehiclesByFuelType) {
+                        System.out.printf("| %-11s | %-19s | %-13s | %-13s | %-13.2f | %-13s |%n",
+                                vehicle.getVehicleId(),
+                                vehicle.getRegistrationNumber(),
+                                vehicle.getBrand(),
+                                vehicle.getModel(),
+                                vehicle.getDailyRate(),
+                                vehicle.getStatus());
+                    }
+                    System.out.println("+-------------+---------------------+---------------+---------------+---------------+---------------+");
+
                     break;
+
                 case 8 :
                     System.out.println("Coming soon....");
                     break;
