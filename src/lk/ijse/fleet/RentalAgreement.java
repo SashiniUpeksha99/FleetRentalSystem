@@ -67,7 +67,6 @@ public class RentalAgreement {
                 "Customer : "+customer.getCustomerId()+" - "+customer.getFullName()+" ("+customer.getClass().getSimpleName()+")\n"+
                 "Rental Days : "+getRentalDays()+"\n"+
                 "Total Cost : "+getTotalCost()+"\n"+
-                "===========================================================\n" +
-                ")";
+                "===========================================================\n" ;
     }
 }

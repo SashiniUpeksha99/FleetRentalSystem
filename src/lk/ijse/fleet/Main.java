@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     private static FleetManager fleetManager;
     private static UserManager userManager;
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
     private static SystemUser loggedInUser;
 
     public static void main(String[] args) {
@@ -14,7 +14,6 @@ public class Main {
     }
 
     public static void run(){
-
         fleetManager = new FleetManager();
 
         fleetManager.setRentalEventListener(agreement ->
@@ -36,7 +35,6 @@ public class Main {
     public static void showAuthMenu(){
         loop1:
         while(true){
-            scanner = new Scanner(System.in);
             System.out.print("===================================================================================================\n" +
                              "                               FLEET RENTAL MANAGEMENT SYSTEM (FRMS)                               \n" +
                              "===================================================================================================\n" +
@@ -228,6 +226,11 @@ public class Main {
                 System.out.print("Daily Rate : ");
                 dailyRate = Double.parseDouble(scanner.nextLine().trim());
 
+                if(dailyRate <= 0){
+                    System.out.println("Invalid Daily Rate!");
+                    continue;
+                }
+
             }catch (NumberFormatException e){
                 System.out.println("Invalid Daily Rate!");
                 continue;
@@ -281,6 +284,11 @@ public class Main {
                         System.out.print("\nPassenger Capacity : ");
                         passengerCapacity = Integer.parseInt(scanner.nextLine().trim());
 
+                        if(passengerCapacity <= 0){
+                            System.out.println("Invalid Passenger Capacity!");
+                            continue;
+                        }
+
                     }catch (NumberFormatException e){
                         System.out.println("Invalid Passenger Capacity!");
                         continue;
@@ -299,6 +307,11 @@ public class Main {
                     try{
                         System.out.print("\nCargo Capacity Tons : ");
                         cargoCapacityTons = Double.parseDouble(scanner.nextLine().trim());
+
+                        if(cargoCapacityTons <= 0){
+                            System.out.println("Invalid Cargo Capacity!");
+                            continue;
+                        }
 
                     }catch (NumberFormatException e){
                         System.out.println("Invalid Cargo Capacity!");
@@ -355,7 +368,7 @@ public class Main {
             System.out.print("Contact Number : ");
             contactNumber = scanner.nextLine().trim();
 
-            if (!contactNumber.matches("07[0-9]{8}")) {
+            if (!contactNumber.matches("0[0-9]{9}")) {
 
                 System.out.println("Invalid contact number!");
                 continue;
@@ -403,7 +416,7 @@ public class Main {
                         break;
 
                     }catch(NumberFormatException e) {
-                        System.out.println("Invalid loyalty points!");
+                        System.out.println("Invalid credit limit!");
                     }
                 }
                 newCustomer = new CorporateCustomer(fullName,contactNumber,creditLimit);
@@ -516,8 +529,6 @@ public class Main {
     }
 
     public static void searchVehiclesByFuelType(){
-
-        scanner = new Scanner(System.in);
         System.out.print("===================================================================================================\n" +
                          "                                   SEARCH VEHICLES BY FUEL TYPE                                    \n" +
                          "===================================================================================================\n");
@@ -538,6 +549,11 @@ public class Main {
         }
 
         List<Vehicle> selectVehiclesByFuelType = fleetManager.getVehiclesByFuelType(fuelType);
+
+        if (selectVehiclesByFuelType.isEmpty()) {
+            System.out.println("No Vehicles Found For " + fuelType);
+            return;
+        }
 
         System.out.println("+-------------+---------------------+---------------+---------------+---------------+---------------+");
         System.out.printf("| %-11s | %-19s | %-13s | %-13s | %-13s | %-13s |%n",
@@ -630,6 +646,13 @@ public class Main {
                          "                                    VIEW ALL RENTAL AGREEMENTS                                     \n" +
                          "===================================================================================================\n");
 
+        List<RentalAgreement> allAgreements = fleetManager.getAllAgreements();
+
+        if(allAgreements.isEmpty()){
+            System.out.println("No Agreements Found!");
+            return;
+        }
+
         System.out.println("+--------------+------------+-------------+-------------+---------------+--------------+");
         System.out.printf("| %-12s | %-10s | %-11s | %-11s | %-13s | %-10s |%n",
                 "Agreement ID",
@@ -640,10 +663,8 @@ public class Main {
                 "Days Elapsed");
         System.out.println("+--------------+------------+-------------+-------------+---------------+--------------+");
 
-        List<RentalAgreement> allAgreements = fleetManager.getAllAgreements();
-
         for (RentalAgreement agreement : allAgreements) {
-            System.out.printf("| %-12s | %-10s | %-11s | %11d | %,13.2f | %-10s |%n",
+            System.out.printf("| %-12s | %-10s | %-11s | %11d | %,13.2f | %-10s   |%n",
                     agreement.getAgreementId(),
                     agreement.getVehicle().getVehicleId(),
                     agreement.getCustomer().getCustomerId(),
@@ -651,8 +672,7 @@ public class Main {
                     agreement.getTotalCost(),
                     agreement.getDaysElapsed());
         }
-        System.out.println("+--------------+------------+-------------+-------------+---------------+---------9" +
-                "-----+");
+        System.out.println("+--------------+------------+-------------+-------------+---------------+--------------+");
 
         System.out.println("\nTotal Rental Agreements : " + allAgreements.size());
     }

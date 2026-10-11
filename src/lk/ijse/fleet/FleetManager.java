@@ -71,7 +71,7 @@ public class FleetManager {
         }
 
         if(!vehicleById.getStatus().equals(RentalStatus.AVAILABLE)){
-            throw new VehicleNotAvailableException("...");
+            throw new VehicleNotAvailableException("Vehicle Is Already Rented!");
         }
 
         Customer customerById = findCustomerById(customerId);
@@ -84,7 +84,7 @@ public class FleetManager {
 
         if(customerById instanceof CorporateCustomer &&
                 !((CorporateCustomer) customerById).hasSufficientCredit(totalCost)){
-            throw new InsufficientCreditException("...");
+            throw new InsufficientCreditException("Insufficient Credit Limit !");
 
         }
 
@@ -104,8 +104,8 @@ public class FleetManager {
             if (agreement.getAgreementId().equalsIgnoreCase(agreementId)) {
                 agreement.getVehicle().setStatus(RentalStatus.AVAILABLE);
 
-                System.out.println("Rental agreement "+agreementId+"completed. Vehicle is now Available.");
-                break;
+                System.out.println("Rental agreement "+agreementId+" completed. Vehicle is now Available.");
+                return;
             }
         }
         System.out.println("No rental agreement found with id : "+agreementId);
@@ -157,6 +157,11 @@ public class FleetManager {
         List<Reportable> reportables = new ArrayList<>();
         reportables.addAll(vehicles);
         reportables.addAll(customers);
+
+        if(reportables.isEmpty()){
+            System.out.println("No Fleet or Customer Records Found!");
+            return;
+        }
 
         for (Reportable item : reportables){
             System.out.println(item.getReportCategory() +" : "+item.getSummary());

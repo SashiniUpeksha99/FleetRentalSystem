@@ -17,7 +17,7 @@ public class OverdueReminderWorker implements Runnable{
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-//               break;
+               break;
             }
         }
     }

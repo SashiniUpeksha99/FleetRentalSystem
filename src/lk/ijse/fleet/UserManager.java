@@ -24,7 +24,7 @@ public class UserManager {
     public SystemUser login(String username, String password){
         if (!usersArr.isEmpty()) {
             for(SystemUser user : usersArr){
-                if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)){
+                if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)){
                     return user;
                 }
             }
