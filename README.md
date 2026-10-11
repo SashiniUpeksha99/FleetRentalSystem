@@ -7,12 +7,12 @@
 
 ---
 ### **Project Overview**
-``
+```
 Fleet Rental Management System (FRMS) is a terminal-based Java application developed for the ITS1033 Object-Oriented Programming coursework. 
 It manages vehicle records, customer records, rental agreements, returns, and basic reports for a small vehicle rental company. 
 Registered users can log in and access the system's operations.
 The implementation follows the coursework's four missions: OOP foundations, core rental operations, background monitoring, and Streams-based reports.
-``
+```
 ---
 ### **Features**
 
